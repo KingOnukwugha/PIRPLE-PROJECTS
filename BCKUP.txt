@@ -1,0 +1,437 @@
+# -*- coding: utf-8 -*-
+import os, sys ,cv2 , time
+import win32ui, win32con
+
+from ffpyplayer import *
+
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import*
+from PyQt5.uic import *
+from PIL import Image   
+
+
+'''
+Created on Thu Oct 22 13:20:09 2020
+Title: HOMEWORK#1 PIRPLE CERTIFimpICATIOn
+@author: ALEX ONUKWUGHA
+HOMEWORK DETAILS:
+    ~Create Python file name main.py
+    ~Create list of all attributes for a song
+    ~Create variables for each attribute-> Ex: Genre = "Jazz"
+    ~Create as many variables as possible
+        >>Artist = "Dave Brubeck"
+        >>Genre = "Jazz"
+        >>DurationInSeconds = "328"
+        .
+        .
+        .
+        >> etc = "..."
+    ~Extra Credit Comment in file
+    -Compress to Zip file & Place in Pirple in Dropbox
+'''
+
+
+
+#simulates video frames with audio synced
+class vObj:
+    global vidURL
+    def VID(vidURL):
+        #physical mp4 file name
+        vidURL = 'HW#1_vidLINK.mp4'
+        
+        vidcapture = cv2.VideoCapture(vidURL)
+        sound = MediaPlayer(vidURL)
+        
+        #in case video frames don't work displays error
+        if vidcapture.isOpened()==False:
+            print('Error opening video stream')
+        
+        #cycles through opening, then reading, and destroying image/audio every millosecond
+        while vidcapture.isOpened():
+            ret, frame = vidcapture.read()
+            audio, vol = sound.get_frame()
+        
+        
+            if ret == True:
+                cv2.imshow('Song_VIDEO',frame)
+        #stops loop if q key is pressed
+            if cv2.waitKey(25) & 0xFF == ord('q'):
+                break
+            if vol != 'eof' and audio is not None:
+                img,t = audio
+                if cv2.waitKey(25) & 0xFF == ord('q'):
+                    break
+        vidcapture.release()
+        cv2.destroyAllWindows()
+
+            
+        tmpWG = QStackWidget();tmpLYT = QStackLayout();tmpWG.setLayout(tmpLYT)
+        
+        # tmpMG.error.connect(Qt.erroralert)
+        # tmpMG.playButton.pressed.connect(tmpMG.play)
+        # tmpMG.pauseButton.pressed.connect(tmpMG.pause)
+        # tmpMG.stopButton.pressed.connect(tmpMG.pause)
+        print(tmpMG)
+        
+        fm.setWidget(tmpWG)
+
+    
+def numofSPACES (line,k)->int:
+    for i in line:
+        #print(i)
+        if i == ' ':
+            k+=1
+    return k
+
+class pySngAttributes:
+    print('www.pirple.com ==>>> Homework#1 \nProgram is Executing...')
+
+    global Lyrics,f_INPUT,kk, N_space
+    Lyrics = []
+    f_INPUT = open('LYRICS_HW1.txt', 'r')
+    
+    
+    kk = 0
+    for j in f_INPUT:
+        Lyrics.append(j.strip('\n'))
+        N_space = numofSPACES(j,kk)
+        kk = N_space
+        kk+=1
+        
+
+def sdiscripBTTN():
+    global SongTitle, Genre, Album
+    
+    SongTitle = 'Monster You Made' ;Genre, Album ={'Protest Anthem':'(Rap)Hip-Hop'}, 'Twice As Tall'
+    gI = list(Genre.keys());gI2 = list(Genre.values());sdlist = []; sdlist.append(SongTitle)
+    sdlist.append(gI[0] + '/' + gI2[0]);sdlist.append(Album)
+    pitems = ['SongTitle.jpg','ProtestAnthem.jpg','AlbumCover.jpg']
+    fll = []
+    tmpWG = QWidget();tmpLYT = QVBoxLayout();
+    for i in range(3):
+        ttl = QLabel(sdlist[i]);ttl.setFont(font3);ttl.setAlignment(Qt.AlignCenter)
+        ttla = QLabel(); ttlam = QPixmap(pitems[i])
+        ttla.setMinimumWidth(int(w/2));ttla.setMinimumHeight(int(h/2))
+        ttl.setStyleSheet("background-color: lightBlue")
+        ttla.setPixmap(ttlam.scaled(int(w/2),int(h/2)))
+        ttla.setAlignment(Qt.AlignCenter);
+        fll.append(ttl);fll.append(ttla)
+    j = 0;
+    for i in fll:
+        tmpLYT.addWidget(i)
+        if j%2 == 1:
+            tmpLYT.addSpacing(int(h/4))
+        j+=1
+    tmpWG.setLayout(tmpLYT)
+    fm.setWidget(tmpWG)
+        
+        
+    print('\npyGUI Song Details Displayed...')
+        #print( Artist[0],'#1, ', Artist[1],'#2')
+    
+
+def stm_dtlsBTTN():
+    global Year, Month, Day, monthname, monthnumb, dayname, daynumb
+    Year = 2020
+    Month, Day = {'August':'8'}, {'Monday':'27th'}
+    monthname, monthnumb, dayname, daynumb = str(list(Month.keys())[0]), str(list(Month.values())[0]), str(list(Day.keys())[0]), str(list(Day.values())[0])
+    Duration = '237[seconds]'; lblist = [str(Year),monthname,monthnumb,dayname,daynumb,Duration]
+    fll = []
+    tmpWG = QWidget();tmpLYT = QVBoxLayout()
+    for i in lblist:
+        tmp = QLabel(i);tmp.setFont(font3);tmp.setStyleSheet("background-color: lightBlue")
+        tmp.setAlignment(Qt.AlignCenter);fll.append(tmp)
+    for i in fll:
+        tmpLYT.addWidget(i);
+    tmpWG.setLayout(tmpLYT);
+    fm.setWidget(tmpWG);fm.setAlignment(Qt.AlignCenter)
+    
+    print('\npyGUI Song Release/Time Displayed...')    
+def a_ftBTTN():
+    global Artist, Featured_Artist, ftartst1_alias, ftartst1_name
+    global ftartst2_alias, ftartst2_name, burnaboy_PIC, ChrisMartin_PIC, MusLink
+    Artist, Featured_Artist  =   ('Burna Boy','Damini Ebunoluwa'),{'featuring Chris Martin':'Christopher Martin', 'featuring Ama Ata Aidoo':'Christina Ama Aidoo'}
+    ftartst1_alias, ftartst1_name, ftartst2_alias, ftartst2_name = str(list(Featured_Artist.keys())[0]), str(list(Featured_Artist.values())[0]), str(list(Featured_Artist.keys())[1]), str(list(Featured_Artist.values())[1]),
+    burnaboy_PIC, ChrisMartin_PIC, Christina_Aidoo = ('BURNABOYPIC.jpg'),('ChrisMartin.jpg'),('ChristinaAidoo.jpg')
+    lblist = [Artist[0],Artist[1],ftartst1_alias, ftartst1_name, ftartst2_alias, ftartst2_name]
+    pclist  =[burnaboy_PIC, ChrisMartin_PIC, Christina_Aidoo]
+    tmpWG = QWidget();tmpLYT = QVBoxLayout();flltll = [];fllpic = []
+    for i in lblist:
+        ttl = QLabel(i);ttl.setFont(font3);ttl.setStyleSheet("background-color: lightBlue")
+        flltll.append(ttl)
+    for i in pclist:
+        pttl = QLabel();ptl = QPixmap(i);
+        pttl.setMinimumWidth(int(w/2));pttl.setMinimumHeight(int(h/2))
+        pttl.setStyleSheet("background-color: lightBlue")
+        pttl.setPixmap(ptl.scaled(int(w/2),int(h/2)))
+        pttl.setAlignment(Qt.AlignCenter)
+        fllpic.append(pttl)
+        
+    for i in range(0,6,2):
+        tmpLYT.addWidget(flltll[i])      
+        tmpLYT.addWidget(fllpic[int(i/2)])
+        
+        if i < 6:
+            tmpLYT.addWidget(flltll[i+1])
+            tmpLYT.addSpacing(int(h/4))
+
+    tmpWG.setLayout(tmpLYT)
+    fm.setWidget(tmpWG)
+    print('\npyGUI Artist/Featured Artist Displayed...')
+    
+def flyrcBTTN()->[]:
+    tmp = QTextEdit();tmp.setFont(font2);tmp.setAlignment(Qt.AlignCenter)
+    string = str()
+    j = 0
+    for i in Lyrics:
+    
+        string =  string +'line#'+ str(j) +': '+ i + '\n\n'
+        j+=1
+    tmp.setPlainText( '\n\n'+ string)
+    tmp.setMinimumWidth(int(w));tmp.setMinimumHeight(int(h))
+    fm.setWidget(tmp)
+    print('\npyGUI Lyrics Displayed...')
+    return Lyrics
+
+def lyrcdtlsBTTN():
+    global numbofLines, numbofletters, numbofwords 
+   
+    numbofLines, numbofletters, numbofwords = len(Lyrics), os.stat('LYRICS_HW1.txt').st_size, N_space
+    nmblst = [numbofLines, numbofletters, numbofwords];tnlst = ['number of lines ','number of letters','number of spaces']
+    
+    tmpWG = QWidget();tmpLYT = QVBoxLayout()
+    
+    fll = []
+    for i in range(3):
+        tmp = QLabel(str(str(nmblst[i]) +' '+ tnlst[i]))
+        tmp.setMinimumWidth(int(w/2));tmp.setMinimumHeight(int(h/8))
+        tmp.setFont(font3);tmp.setStyleSheet("background-color: lightBlue")
+        tmp.setAlignment(Qt.AlignCenter)
+        fll.append(tmp)
+        tmpLYT.addWidget(fll[i])
+    tmpWG.setLayout(tmpLYT)
+    fm.setWidget(tmpWG)
+        
+    print('\npyGUI Lyric Details Diplayed...')
+    #print(numbofLines, numbofletters, numbofwords)
+
+def slogiBTTN():
+    global Location, cmbckt, csize, data
+    Location = 'Nigeria'
+    tmpWG = QWidget();tmpLYT = QVBoxLayout()
+    
+    tbff = QLabel();tbff.setText(str('The location of Song \nTook place in \n"' + Location + '"\nPlease type \ncomments below:'))
+    tbff.setFont(font3);tbff.setStyleSheet("background-color: lightBlue")
+    tmp = QTextEdit();tmp.setStyleSheet("background-color: lightGrey");tmp.setFont(font2)
+    tmp.setMinimumHeight(int(h/2));tmp.scrollBarWidgets(Qt.AlignRight)
+    fll=[]; cmbckt = open('Commentbucket.txt','r');cmwrt = open('Commentbucket.txt','w')
+    csize = os.path.getsize('Commentbucket.txt')
+    strng = ''
+    data = tmp.toPlainText()
+    
+    for i in range(csize):
+        fll.append(cmbckt.read(i))
+        strng = strng + fll[i]
+        print('reading',strng)
+        
+    btmp = QPushButton('Post New Comments');btmp.setFont(font2)
+    btmp.setStyleSheet("background-color: lightBlue")
+    tmp.setPlainText(strng)
+    btmp.clicked.connect(delSUBBTTN)
+    btmp.clicked.connect(posSUBBTTN)
+    
+    btmp2 = QPushButton('Clear && Delete All Comments');btmp2.setFont(font2)
+    btmp2.setStyleSheet("background-color: Orange")
+    
+    tmpLYT.addWidget(tbff);tmpLYT.addWidget(tmp);tmpLYT.addWidget(btmp);tmpLYT.addWidget(btmp2)
+    tmpWG.setLayout(tmpLYT);fm.setWidget(tmpWG)
+    
+    print('\npyGUI Song Logistics/Comment Area Displayed...')
+
+def delSUBBTTN():
+    if csize > 0:
+        cmbckt.truncate(0)
+        
+def posSUBBTTN():
+    print(data, 'Posted')
+    for i in data:
+        cmwrt.write(i)
+        print('writing',i)
+
+    cmwrt.close()
+    
+
+def smp4vidBTTN():
+    global vid
+    vidURL = 'HW#1_vidLINK.mp4'
+    vid = vObj.VID(vidURL)
+    
+   
+    
+    
+    print('\npyGUI Song video Played...')
+    
+def resetBTTN():
+    rst = QWidget();rst.setStyleSheet("background-color: white")
+    for i in reversed(range(fm1.count())): 
+        fm1.itemAt(i).widget().deleteLater()
+    fm.setWidget(rst)
+    #tmp = QTextEdit();tmp.setFont(font2);tmp.setAlignment(Qt.AlignCenter)
+    #fm2.removeWidget(tmp);
+    print("\npyGUI Reset...")
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+print('\nTHE SONGE ATTRIBUTES ARE GROUPED \nTHEN LISTED IN POP UP:\n')
+class instruction():
+    def do():
+        print('Pop Up Activated...\nif you do not see pop up \ncheck behind opened applications', end=' ')
+        check = win32ui.MessageBox('PLEASE TAKE NOTE THAT THE FOLLOWING POPUP LIST ALL VARIABLE OBJECTS \
+        \n[songtitle, genre, album] \n[ artist, ft_artist, artist_pic, ft_artist_pic] \
+        \n[year, month, day,duration] \n[locatoin] \
+        \n[numberofletters, numberofwords, numberoflines] \n[lyrics] \n[mp4vid] \n\n\n\n\n \
+        \nto continue to pyGUI press OK \notherwise press "Close" or "Cancel" button to quit program', '<<TOKEN POP UP: PLEASE READ!!>>',1)
+        if check ==  1:
+            print(' .. .')
+        else:
+            print('\n\nProgram Terminated...');sys.exit();
+popUP = instruction.do()
+
+class SongUI(QMainWindow):
+    
+    def startUP():
+        global gui_width, gui_height, w, h, app
+        app = QApplication(sys.argv)
+        print('\npyGUI EXECUTING...', end=' ')
+        scrnSZ = app.desktop().screenGeometry()
+        gui_width, gui_height = scrnSZ.width(), scrnSZ.height()
+        w, h = int (gui_width/2), int(gui_height/2)
+        
+    def sFRAME(): 
+        global frame;
+        SongUI.startUP()
+        frame = QMainWindow()
+        frame.centralWidget()
+        frame.setGeometry(int(gui_width/3), int(gui_height/4),w, h)
+        frame.setFixedSize(w, h);frame.setWindowTitle('--\//\ PySong_GUI /\\\/--')
+        frame.setStyleSheet("background-color: lightBlue;")
+        
+    def tBAR():
+        global font, font3, font2, l_title, f1
+        SongUI.sFRAME()
+       # SIZE = frame.frameSize();print('\n\n\n The size is',SIZE)
+        font = QFont();font.setFamily('Times');font.setWeight(QFont.Bold);font.setPixelSize(84)
+        font2 = QFont();font2.setFamily('Times');font2.setWeight(QFont.Bold);font2.setPixelSize(22)
+        font3 = QFont();font3.setFamily('Times');font3.setWeight(QFont.Bold);font3.setPixelSize(54)
+
+        l_title = QLabel('Python First GUI HW#1');l_title.setFont(font);l_title.setAlignment(Qt.AlignCenter)
+        l_title.setStyleSheet("background-color: orange");l_title.setFixedHeight(int(h/7))
+        
+    def sBTTN():
+        global b1, b2, b3, b4, b5, b6, b7, b8, blist
+        SongUI.tBAR()
+        
+        b1, b2, b3, b4, b5, b6, b7, b8 \
+        = QPushButton('Song Description'), QPushButton('Song Time Details'), QPushButton(' Artist details') \
+        , QPushButton('Full Lyrics'), QPushButton('Lyric details'), QPushButton('Song Logistics')\
+        , QPushButton('Song MP4 vid'), QPushButton('Reset Button')
+        blist = [b1,b2,b3,b4,b5,b6,b7,b8]
+        
+        for i in blist:
+            if i is b8:
+                i.setMinimumHeight(int (h/5))
+                i.setFont(font3)
+            else:
+                i.setFont(font2);i.setMinimumHeight(int(h/17))
+            i.setStyleSheet("background-color: lightBlue")
+        
+    def sBTTN2():
+        global f0,f1,hBOX,p
+        SongUI.sBTTN()
+
+        f0 = QVBoxLayout();f0.setAlignment(Qt.AlignLeft)
+        f1 = QWidget();f1.setLayout(f0);
+        p = QLabel('Button Selection');p.setFont(font2);p.setStyleSheet("background-color: lightGrey");p.setFixedWidth(int(w/3));p.setAlignment(Qt.AlignCenter)
+        for i in blist:
+            f0.addWidget(i);
+            
+    def dWNDOW():
+        global ff, f3, fter, hBOX, fb4, fm, fm1
+        SongUI.sBTTN2()
+        
+        fm1 = QStackedLayout()
+        fm = QScrollArea(); fm.setStyleSheet("background-color: white;")
+        fm.setFixedWidth(int(w*(13/23)));fm.setLayout(fm1)
+        fter = QVBoxLayout(); fter.addWidget(fm)
+        
+        f3 = QComboBox(); f3.setStyleSheet("background-color: lightBlue;");
+        f3.setFixedHeight(int(h*(11/15)))
+        f3.setLayout(fter)
+        f3.setFixedWidth(int(w*(2/3)))
+        
+        ff = QHBoxLayout();ff.addWidget(f1);ff.addWidget(f3)
+        fb4 = QWidget()
+        fb4.setLayout(ff)
+        
+        hBOX = QVBoxLayout()
+        hBOX.addWidget(l_title);hBOX.addWidget(fb4)
+        
+        
+    def fWNDOW():
+        global fwndow
+        SongUI.dWNDOW()
+        
+        fwndow = QGroupBox();fwndow.setLayout(hBOX)
+        fwndow.setFixedSize(int(w*(117/118)), int(h* (27/28)))
+        fwndow.setStyleSheet("background-color: orange;")
+        frame.setCentralWidget(fwndow)
+                
+    def bttnSWITCHES():
+        SongUI.fWNDOW()
+
+        print('first')
+        b1.clicked.connect(sdiscripBTTN)
+        b2.clicked.connect(stm_dtlsBTTN)
+        b3.clicked.connect(a_ftBTTN)
+        b4.clicked.connect(flyrcBTTN)
+        b5.clicked.connect(lyrcdtlsBTTN)
+        b6.clicked.connect(slogiBTTN)
+        b7.clicked.connect(smp4vidBTTN)
+        b8.clicked.connect(resetBTTN)
+        
+    
+        print(' .. . ')
+        
+    def run():
+        SongUI.bttnSWITCHES()
+        frame.show()
+        app.exec_()
+        print('\npyGUI TERMINATED...')
+        
+SongUI.run()
+
+'''
+Resource1: http://zetcode.com/gui/pyqt5/layout/
+Resource2: https://pythonspot.com/pyqt5-colors/
+Resource3: https://www.learnpyqt.com/tutorials/creating-your-first-window/
+Resource4:https://www.codespeedy.com/call-a-function-from-another-function-in-python/
+Resource5: A WHOLE LOT OF STACKOVERFLOW SUGGESTIONS
+Probs 5 more Resources that I lost track of that were similar to those above
+'''
+    
+    
+    
+    
+    
